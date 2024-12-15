@@ -1,6 +1,7 @@
 from time import sleep
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 
 url1="https://docs.google.com/spreadsheets/d/e/2PACX-1vRXLWDLpnv-108LNY1vMSst-yvrWKqGlytCjlt2Qauid7gv7x2MLzKsO0fPWJ9Cfxj3AfevBvc9gGC0/pubhtml#"
 url2="https://docs.google.com/spreadsheets/d/e/2PACX-1vQEyqy8X0hPQ4LL5yf3NRS0vrw-KMOS0c5E0onO-BU3lakCuANqvd3jWH_l_x8xtNUeiEq9VOjWU4Kv/pubhtml"
@@ -11,7 +12,18 @@ driver.get(url1)
 navigate=driver.find_element(by=By.ID,value="sheet-menu")
 list_of_tables=navigate.find_elements(By.TAG_NAME,"li")
 
+
+tables_names=[]
 for table in list_of_tables:
+    table.text.strip()
+    if table.text.startswith('An') and table.text[-1].isdigit():
+       tables_names.append(table.text+" CTI-Ro")
+    else:
+        tables_names.append(table.text)
     table.click()
-    sleep(3)
+    sleep(2)
+
+print(tables_names)
+
+
 
